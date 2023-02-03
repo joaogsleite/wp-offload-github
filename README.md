@@ -17,7 +17,7 @@ Define these values on your `wp-config.php`
 > Read here how to create a github token: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 
 ```php
-define('GITHUB_REPO', 'owner/repo');
-define('GITHUB_BRANCH', 'uploads');
-define('GITHUB_TOKEN', '....');
+define('WP_OFFLOAD_GITHUB_REPO', 'owner/repo');
+define('WP_OFFLOAD_GITHUB_BRANCH', 'uploads');
+define('WP_OFFLOAD_GITHUB_TOKEN', '....');
 ```
