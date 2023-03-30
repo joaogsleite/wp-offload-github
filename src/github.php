@@ -5,7 +5,16 @@
 //define('WP_OFFLOAD_GITHUB_BRANCH', 'uploads');
 //define('WP_OFFLOAD_GITHUB_TOKEN', '....');
 
+function check_github_token_constants() {
+  if (!defined('WP_OFFLOAD_GITHUB_TOKEN') && function_exists('getenv_docker')) {
+    define('WP_OFFLOAD_GITHUB_REPO', getenv_docker('WP_OFFLOAD_GITHUB_REPO', 'owner/repo'));
+    define('WP_OFFLOAD_GITHUB_BRANCH', getenv_docker('WP_OFFLOAD_GITHUB_BRANCH', 'uploads'));
+    define('WP_OFFLOAD_GITHUB_TOKEN', getenv_docker('WP_OFFLOAD_GITHUB_TOKEN', '...'));
+  }
+}
+
 function get_file_from_github($filename) {
+  check_github_token_constants();
   $ctx = stream_context_create([
     "http" => [
       "method" => "GET",
@@ -25,6 +34,7 @@ function get_file_from_github($filename) {
 }
 
 function upload_file_to_github($path) {
+  check_github_token_constants();
   $content = file_get_contents($path);
   $pathinfo = pathinfo($path);
   $filename = uniqid() . '.' . $pathinfo['extension'];
